@@ -1,0 +1,100 @@
+# Inventory for the gate wireless controller project (Phase 1).
+# Quantities include a spare where the part is cheap and easy to fry.
+# Build is solder-free: every part is a module with screw terminals,
+# connected module to module with ferruled wire. No soldering needed.
+
+already_have:
+  - item: Centurion D3 sliding gate motor
+    notes: CP80 control board, 12V battery-backed system
+
+  - item: Centurion NOVA remotes
+    quantity: 2
+    notes: Keep working unchanged; one at home, one in the car
+
+  - item: Raspberry Pi 5
+    notes: Always powered, indoors, within WiFi reach of the gate
+
+  - item: Home WiFi network
+    notes: Coverage at the gate motor must be verified before Phase 2
+
+  - item: Android/iOS phone
+    notes: Runs the Flutter app and Tailscale client
+
+  - item: Multimeter
+    notes: Verify the 12V aux and status LED voltages before wiring anything
+
+to_buy:
+  - item: ESP32 dev board
+    quantity: 2
+    example: ESP32-WROOM-32 DevKit (or ESP32-C3 DevKitM)
+    purpose: On-gate controller; second board is a spare, and doubles as an
+      ESP-NOW bridge if WiFi at the gate turns out to be too weak
+    approx_price_usd: 5-8 each
+
+  - item: ESP32 screw-terminal breakout board
+    quantity: 1
+    example: ESP32 DevKit 38-pin terminal adapter (must match the dev
+      board's pin count and layout)
+    purpose: ESP32 plugs into it; every GPIO becomes a screw terminal, so
+      no soldering and good vibration resistance
+    approx_price_usd: 5-8
+
+  - item: Buck converter, 12V to 5V
+    quantity: 2
+    example: Mini560 or MP1584EN module
+    purpose: Powers the ESP32 from the CP80 12V aux output; one spare.
+      Pick the variant with screw terminals fitted, not bare solder pads
+    approx_price_usd: 2-3 each
+
+  - item: Relay module, 3.3V logic, 1 or 2 channel
+    quantity: 1
+    example: 2-channel opto-isolated relay module
+    purpose: Pulses TRG to COM on the CP80 (gate trigger); second channel
+      kept free for a future pedestrian-mode input (Phase 5)
+    approx_price_usd: 3-5
+
+  - item: Optocoupler module
+    quantity: 2
+    example: PC817 breakout module (1 channel, with onboard resistor)
+    purpose: Reads the CP80 status LED output (12V signal) safely into a
+      3.3V ESP32 GPIO; resistor is built in, no soldering; one spare
+    approx_price_usd: 2-3 each
+
+  - item: Hookup wire (stranded) + ferrule crimper kit
+    quantity: 1
+    purpose: All module-to-module and CP80 wiring; ferrules make stranded
+      wire grip properly in screw terminals
+    approx_price_usd: 15
+
+  - item: Wago-style lever connectors, assorted
+    quantity: 1
+    purpose: Solder-free wire-to-wire joins (e.g. tapping the 12V aux line)
+    approx_price_usd: 5
+
+  - item: Mounting plate or small plastic box
+    quantity: 1
+    purpose: All modules mount onto it (screws or foam tape) so nothing
+      hangs by its wires inside the motor housing; ~12x9 cm is enough
+    approx_price_usd: 5
+
+  - item: USB cable for the ESP32 (micro-USB or USB-C, data-capable)
+    quantity: 1
+    purpose: Flashing firmware; check the connector matches the dev board
+    approx_price_usd: 3
+
+  - item: Heat shrink tubing and cable ties
+    quantity: 1
+    purpose: Insulation and strain relief inside the motor housing
+    approx_price_usd: 4
+
+optional:
+  - item: Reed switch + magnet (gate rated)
+    quantity: 1
+    purpose: Hard closed-position confirmation; Phase 5, not needed for the
+      first working version
+    approx_price_usd: 5
+
+  - item: WiFi repeater / outdoor access point
+    quantity: 1
+    purpose: Only if the WiFi coverage check at the gate fails
+    approx_price_usd: 20-30
