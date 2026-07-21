@@ -63,26 +63,34 @@ D3 control board (CP80)
 
 These sit on top of the global rules in `~/.claude/rules/`.
 
-Process rules, always in force:
+Always in force:
 
 @rules/phase-gate.md
 @rules/inventory-sync.md
 @rules/repo-layout.md
 @rules/docs-conventions.md
-
-Build rules, for when the work reaches them:
-
 @rules/wiring-research.md
-@rules/esp32-firmware.md
-@rules/mqtt-contract.md
 
 ## Project Skills
+
+Workflow:
 
 - `/whats-next [area]` - everything that could be worked on right now
 - `/log-progress [notes]` - end of session: worklog, status, inventory
 - `/inventory-update [parts]` - move arrived parts into `already_have`
 - `/d3-manual <topic>` - look something up in the scanned D3/D5 manual
 - `/wiring-check [work]` - pre-flight safety checklist before Phase 2 wiring
+
+Build standards, loaded on demand to keep them out of every turn's context.
+**These are mandatory, not optional reading:**
+
+- `/esp32-firmware [task]` - **load before any work under `firmware/`**,
+  before choosing GPIO pins, and before touching the relay or LED decoding
+- `/mqtt-contract [task]` - **load before any MQTT code, gate-state handling,
+  trigger endpoint, or Mosquitto config**, in firmware, server or app alike
+
+Skipping these is how the gate ends up opening itself at boot, or the app ends
+up reporting a state the gate is not in.
 
 ## Phases
 

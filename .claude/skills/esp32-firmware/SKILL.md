@@ -1,8 +1,16 @@
-# ESP32 Firmware Rules
+---
+name: esp32-firmware
+description: Conventions and safety rules for the ESP32 firmware in this project. Load BEFORE writing, editing or reviewing anything under firmware/, before choosing GPIO pins, before touching the relay trigger or status LED decoding, and before setting up platformio.ini. Invoke with /esp32-firmware [what you are working on].
+---
+
+# ESP32 Firmware Rules: $ARGUMENTS
 
 Applies to everything under `firmware/`. The board is a 30-pin ESP32
 (CP2102 TYPE-C) sitting inside the D3 motor housing, driving an opto-isolated
 relay on TRG-COM and reading the CP80 status LED through a PC817.
+
+Follow every section below for the work described in `$ARGUMENTS`. These are
+requirements, not suggestions: this device physically moves a heavy gate.
 
 This device can physically move a heavy sliding gate. Treat every defect as a
 safety defect, not a cosmetic one.

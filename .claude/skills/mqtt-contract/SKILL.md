@@ -1,4 +1,9 @@
-# MQTT Contract
+---
+name: mqtt-contract
+description: The authoritative MQTT topic, payload and state-enum contract shared by the ESP32 firmware, the FastAPI server and the Flutter app. Load BEFORE writing or changing any MQTT publish/subscribe code, any gate state handling, any API endpoint that triggers the gate, or the Mosquitto config. Invoke with /mqtt-contract [what you are working on].
+---
+
+# MQTT Contract: $ARGUMENTS
 
 The single source of truth for what moves between the ESP32, the FastAPI
 service on the Pi, and the Flutter app. Three codebases in three languages
@@ -7,6 +12,9 @@ silently and the app shows a state the gate is not in.
 
 **Changing anything here means changing the firmware, the server, the app, and
 this file in the same change. No exceptions.**
+
+If `$ARGUMENTS` describes work on one side of the contract only, still check
+the other two: a change that looks local is usually not.
 
 ## Broker
 
