@@ -18,7 +18,8 @@ already_have:
     notes: Coverage at the gate motor must be verified before Phase 2
 
   - item: Android/iOS phone
-    notes: Runs the Flutter app and Tailscale client
+    notes: Runs the Flutter app; reaches the Pi through the Cloudflare Tunnel,
+      carrying a Zero Trust Access credential
 
   - item: Multimeter
     notes: Verify the 12V aux and status LED voltages before wiring anything

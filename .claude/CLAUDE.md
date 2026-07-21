@@ -16,15 +16,21 @@ the internet, using hardware I control end to end.
 
 An ESP32 is wired directly to the D3's CP80 control board and acts as the
 on-gate agent. It talks wirelessly over home WiFi (MQTT) to a Raspberry Pi 5
-indoors, which exposes a private API reachable from my phone via Tailscale.
-A simple Flutter app is the front end.
+indoors, which exposes an API reachable from my phone through a Cloudflare
+Tunnel with Zero Trust Access in front of it. A simple Flutter app is the
+front end.
 
 ```
 Phone (anywhere)
-   |  internet, via Tailscale (no public exposure)
+   |  HTTPS to the tunnel hostname
+   v
+Cloudflare edge
+   |  Zero Trust Access policy: unauthenticated requests
+   |  are rejected here, before reaching home
    v
 Raspberry Pi 5 (indoors, always powered)
-   |  FastAPI service + Mosquitto MQTT broker
+   |  cloudflared (outbound tunnel only, no inbound ports)
+   |  FastAPI service (bound to localhost) + Mosquitto MQTT broker
    |
    |  home WiFi
    v
@@ -43,11 +49,40 @@ D3 control board (CP80)
    the Pi and the gate side is wireless only.
 2. Wiring directly to the motor itself is allowed, but only via the ESP32,
    and only on the low-voltage (12V) side of the CP80 board.
-3. Nothing is exposed to the public internet. Remote access goes through
-   Tailscale; no port forwarding, no public endpoints.
+3. No inbound ports, ever. No port forwarding, no UPnP, no DMZ. Remote access
+   is an outbound-only Cloudflare Tunnel, and every request must be
+   authenticated by Zero Trust Access at Cloudflare's edge before it reaches
+   the Pi. The tunnel hostname resolves publicly, so there must never be an
+   unauthenticated route to the API. FastAPI binds to localhost only: it is
+   reachable through cloudflared and nothing else.
 4. The existing NOVA remotes must keep working unchanged.
 5. Mains power and the battery must be disconnected before any wiring work
    on the motor.
+
+## Project Rules
+
+These sit on top of the global rules in `~/.claude/rules/`.
+
+Process rules, always in force:
+
+@rules/phase-gate.md
+@rules/inventory-sync.md
+@rules/repo-layout.md
+@rules/docs-conventions.md
+
+Build rules, for when the work reaches them:
+
+@rules/wiring-research.md
+@rules/esp32-firmware.md
+@rules/mqtt-contract.md
+
+## Project Skills
+
+- `/whats-next [area]` - everything that could be worked on right now
+- `/log-progress [notes]` - end of session: worklog, status, inventory
+- `/inventory-update [parts]` - move arrived parts into `already_have`
+- `/d3-manual <topic>` - look something up in the scanned D3/D5 manual
+- `/wiring-check [work]` - pre-flight safety checklist before Phase 2 wiring
 
 ## Phases
 
@@ -68,10 +103,12 @@ enhancements come last.
   board: trigger relay/optocoupler on TRG-COM, status LED sense line, buck
   converter on the 12V aux output. Bench-test before touching the gate.
 - **Phase 3 - Code and configuration.** ESP32 firmware (MQTT: publish state,
-  subscribe to commands), Mosquitto + FastAPI service on the Pi, Tailscale
-  setup. End-to-end test: API call opens the gate and state is reported back.
+  subscribe to commands), Mosquitto + FastAPI service on the Pi, cloudflared
+  tunnel and Zero Trust Access policy. End-to-end test: API call opens the
+  gate and state is reported back.
 - **Phase 4 - Flutter app.** A simple app: one trigger button plus live gate
-  state, talking to the Pi's API over Tailscale.
+  state, talking to the Pi's API through the Cloudflare Tunnel. The app has to
+  carry an Access credential (service token or the Access login flow).
 - **Phase 5 - Improvements (later, not now).** Examples: notification when
   the gate stays open too long, open/close history, pedestrian-mode button,
   reed switch for hard closed-position confirmation. Do not start any of
@@ -88,11 +125,14 @@ enhancements come last.
 
 ## Planned Repository Layout
 
+- `.claude/rules/` - project-specific rules, imported above
+- `.claude/skills/` - project-specific slash commands
 - `inventory.yaml` - full parts list: what I own, what to buy
 - `firmware/` - ESP32 firmware (Phase 3)
 - `server/` - Python FastAPI service + MQTT config for the Pi (Phase 3)
 - `app/` - Flutter app (Phase 4)
-- `docs/` - wiring diagrams, D3 manual references, decisions
+- `docs/` - all written work: decisions, wiring, worklog, reference,
+  runbooks. Conventions in `.claude/rules/docs-conventions.md`
 
 ## Reference Material
 
