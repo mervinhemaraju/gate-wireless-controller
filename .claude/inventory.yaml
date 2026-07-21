@@ -40,33 +40,52 @@ already_have:
     notes: DL-6, 0.06-6mm / AWG28-10 range; comfortably covers the 22AWG
       hookup wire used throughout this build
 
-to_buy:
   - item: ESP32 dev board
     quantity: 2
-    example: 30-pin ESP32 dev board, CP2102 TYPE-C variant (AliExpress item
-      1005004476867346, "CP2102 TYPEC" color option). CP2102 chosen over
-      CH340C/CH9102 for smoother macOS driver support
-    purpose: On-gate controller; second board is a spare, and doubles as an
-      ESP-NOW bridge if WiFi at the gate turns out to be too weak
-    approx_price_usd: 5-8 each
+    notes: 30-pin ESP32, CP2102 TYPE-C variant; on-gate controller, second
+      board is a spare and doubles as an ESP-NOW bridge if WiFi at the
+      gate turns out to be too weak
 
   - item: ESP32 screw-terminal breakout board
     quantity: 1
-    example: Same listing as the dev board (AliExpress item
-      1005004476867346, "30PIN" color option), pin-matched to the 30-pin
-      board
-    purpose: ESP32 plugs into it; every GPIO becomes a screw terminal, so
-      no soldering and good vibration resistance
-    approx_price_usd: 5-8
+    notes: Pin-matched to the 30-pin ESP32; every GPIO becomes a screw
+      terminal, no soldering and good vibration resistance
 
   - item: Optocoupler module
     quantity: 1
-    example: PC817 breakout module, 2-channel variant
-    purpose: Reads the CP80 status LED output (12V signal) safely into a
-      3.3V ESP32 GPIO; resistor is built in, no soldering; one channel
-      spare on the same module
-    approx_price_usd: 2-3
+    notes: PC817 breakout, 2-channel; reads the CP80 status LED (12V
+      signal) safely into a 3.3V ESP32 GPIO, one channel spare
 
+  - item: Ferrule crimp terminals, E0508 (0.5mm²)
+    quantity: 1
+    notes: Matches the 22AWG hookup wire and the DL-6 crimper already on
+      hand
+
+  - item: Wire stripper
+    quantity: 1
+    notes: QHTITEC multifunctional wire stripper/crimping pliers,
+      0.2-6.0mm range
+
+  - item: Wago-style lever connectors, 2273-202 (2-way)
+    quantity: 1
+    notes: Solder-free wire-to-wire joins (e.g. tapping the 12V aux line)
+
+  - item: Mounting box
+    quantity: 1
+    notes: IP67 ABS enclosure, 95x65x55mm; fits the motor housing floor
+      space (10x8cm, 8cm depth), dry-layout check still worth doing
+      before drilling
+
+  - item: USB cable for the ESP32 (data-capable)
+    quantity: 1
+    notes: Type-C, matches the CP2102 board; for flashing firmware
+
+  - item: Heat shrink tubing, assorted sizes
+    quantity: 1
+    notes: 127-800pcs assorted kit; insulation and strain relief inside
+      the motor housing
+
+to_buy:
   - item: Hookup wire (stranded), 6 colors
     quantity: 1
     example: UL1007 stranded wire, 6-color bundle, 22AWG (not the 30AWG
@@ -75,49 +94,6 @@ to_buy:
       Yellow=5V, Blue=trigger signal, Green=relay-to-CP80 loop,
       White=status LED chain
     approx_price_usd: 8
-
-  - item: Ferrule crimp terminals, E0508 (0.5mm²)
-    quantity: 1
-    example: ~100pcs pack, E0508 size selected specifically (matches
-      22AWG wire; the coarser sizes bundled in mixed kits, e.g. E1508
-      and up, are too large and won't crimp down properly)
-    purpose: Ferrules make stranded wire grip properly in screw terminals
-    approx_price_usd: 3
-
-  - item: Wire stripper
-    quantity: 1
-    example: QHTITEC multifunctional wire stripper/crimping pliers,
-      0.2-6.0mm range (AliExpress item 1005003521876977)
-    purpose: Stripping insulation before fitting ferrules
-    approx_price_usd: 5
-
-  - item: Wago-style lever connectors, 2273-202 (2-way)
-    quantity: 1
-    purpose: Solder-free wire-to-wire joins (e.g. tapping the 12V aux line)
-    approx_price_usd: 5
-
-  - item: Mounting box
-    quantity: 1
-    example: IP67 ABS enclosure, 95x65x55mm variant
-    purpose: All modules mount onto it (screws or foam tape) so nothing
-      hangs by its wires inside the motor housing; confirmed to fit the
-      available space in the motor housing (10x8cm floor, 8cm depth) but
-      worth a dry-layout check before drilling
-    approx_price_usd: 5
-
-  - item: USB cable for the ESP32 (data-capable)
-    quantity: 1
-    example: AliExpress item 1005007650948342; connector matches the
-      CP2102 TYPE-C board
-    purpose: Flashing firmware
-    approx_price_usd: 3
-
-  - item: Heat shrink tubing, assorted sizes
-    quantity: 1
-    example: 127-800pcs assorted kit (plain tubing, not solder-splice
-      connectors, which conflict with the solder-free build)
-    purpose: Insulation and strain relief inside the motor housing
-    approx_price_usd: 4
 
 optional:
   - item: Reed switch + magnet (gate rated)
