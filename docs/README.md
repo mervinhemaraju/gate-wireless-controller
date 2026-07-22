@@ -25,7 +25,11 @@ yet.
 ## reference/
 
 Extracted third-party material, mainly OCR output from the scanned D3/D5
-manual (see `/d3-manual`). Nothing here yet.
+manual (see `/d3-manual`).
+
+- [d3-manual-p31-p41-cp80-terminals](reference/d3-manual-p31-p41-cp80-terminals.md) - CP80 terminal ident, order and functions (COM, 12V, TRG, LED status output, etc.)
+- [d3-manual-p45-led-indicator-lights](reference/d3-manual-p45-led-indicator-lights.md) - STATUS LED flash-code table and the other indicator LEDs
+- [d3-manual-p10-specifications](reference/d3-manual-p10-specifications.md) - D3 electrical specs and the aux-rail power budget
 
 ## runbooks/
 

@@ -17,14 +17,15 @@ Manual URL (also in `.claude/CLAUDE.md`):
 
 ## 1. Check the Cache First
 
-Look under `docs/d3-manual/` for already-extracted text. If the answer is
-there, use it and skip straight to reporting. Extraction is slow; do it once.
+Look under `docs/reference/` for already-extracted text (files named
+`d3-manual-*`). If the answer is there, use it and skip straight to reporting.
+Extraction is slow; do it once.
 
 ## 2. Fetch
 
-If the PDF is not already cached in the scratchpad or `docs/d3-manual/`,
-download it there. Keep the PDF itself out of git: cache the extracted **text**
-in `docs/d3-manual/`, not the binary.
+If the PDF is not already cached in the scratchpad, download it there. Keep the
+PDF itself out of git: cache the extracted **text** in `docs/reference/`, not
+the binary.
 
 ## 3. Confirm It Is Scanned
 
@@ -32,9 +33,19 @@ Run `pdftotext` on a couple of pages first. If it yields real text, the job is
 done cheaply and the rest of this pipeline is unnecessary. Expect it to come
 back empty.
 
-## 4. Render and OCR
+## 4. Read the Pages
 
-Preferred path, poppler plus tesseract:
+Two paths. Prefer the visual read: it needs only poppler and avoids the
+character-confusion that plagues OCR of the terminal labels.
+
+**Preferred: visual read via the Read tool (poppler only, no tesseract).**
+Point the Read tool at the PDF with a `pages` range. The harness renders the
+pages (via poppler's `pdftoppm`) and presents them as images, which are read
+directly. Find the section with the Table of Contents first, then read only the
+pages likely to hold the answer (max 20 pages per Read call). Still flag any
+character that looks doubtful and say to confirm against the PDF page.
+
+**Fallback: OCR with tesseract**, only if the Read tool cannot render the PDF:
 
 ```bash
 pdftoppm -r 300 -png -f <first> -l <last> manual.pdf page
@@ -44,17 +55,21 @@ tesseract page-01.png page-01 --psm 6
 - 300 dpi minimum. Lower resolutions mangle the terminal labels, which is
   exactly the detail being looked up
 - PyMuPDF is an acceptable alternative if poppler is unavailable
-- If neither toolchain is installed, stop and tell the user which one to
-  install rather than installing it yourself
 
-Only OCR the pages likely to hold the answer. The wiring and terminal sections
-plus the LED code tables are a small slice of the document; rendering all of it
-at 300 dpi is wasteful.
+Both paths need poppler. If it is not installed, stop and tell the user to
+install it (`brew install poppler`) rather than installing it yourself. Either
+way, only process the pages likely to hold the answer: the wiring and terminal
+sections plus the LED code tables are a small slice of the document, and
+rendering all 48 pages is wasteful.
 
 ## 5. Cache
 
-Write the extracted text to `docs/d3-manual/pXX.txt` (or a section-named file),
-so the next lookup is a `grep`.
+Write the extracted text to `docs/reference/`, following
+`.claude/rules/docs-conventions.md`: kebab-case names that mirror the source,
+`d3-manual-pXX-<topic>.md` (for example `d3-manual-p31-p41-cp80-terminals.md`),
+each with the standard doc header. Add an index line for every file to the
+`reference/` section of `docs/README.md`, or the cache is undiscoverable. This
+way the next lookup is a `grep` over `docs/reference/`.
 
 ## 6. Report
 

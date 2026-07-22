@@ -54,8 +54,12 @@ already_have:
 
   - item: Optocoupler module
     quantity: 1
-    notes: PC817 breakout, 2-channel; reads the CP80 status LED (12V
-      signal) safely into a 3.3V ESP32 GPIO, one channel spare
+    notes: PC817 breakout, 2-channel; senses the CP80 gate-status output into
+      a 3.3V ESP32 GPIO, one channel spare. Status source is the CP80 `LED`
+      terminal, approx 4.5V DC / 20mA per manual p.31 (NOT the 12V rail as
+      earlier assumed). That 20mA-max source is marginal for a PC817 input;
+      confirm by measurement and size the series resistor for it before wiring.
+      See docs/reference/d3-manual-p31-p41-cp80-terminals.md
 
   - item: Ferrule crimp terminals, E0508 (0.5mm²)
     quantity: 1
