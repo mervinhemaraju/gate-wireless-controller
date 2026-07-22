@@ -50,7 +50,8 @@ listed them.
 Read the `## Current Status` section of `.claude/CLAUDE.md`:
 
 - If `to_buy` is now empty, Phase 1 procurement is done. Update the status
-  line to say so and note that Phase 2 wiring is unblocked
+  line to say so and note that Phase 3 wiring is unblocked once any in-transit
+  parts arrive
 - If items remain, update the status to name what is still outstanding
 - Leave the WiFi verification notes alone unless the user mentions them
 

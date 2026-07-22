@@ -1,7 +1,8 @@
 # 0001 - Cloudflare Tunnel over Tailscale
 
 - **Date:** 2026-07-21
-- **Phase:** 3 (affects design now, implemented later)
+- **Phase:** 2 (affects design now, implemented later; server and cloudflared
+  work moved from Phase 3 to Phase 2 when the phases were reordered 2026-07-22)
 - **Status:** verified
 
 ## Context
@@ -51,10 +52,10 @@ bug in the FastAPI auth path cannot by itself expose the gate.
   real part of the threat model
 - FastAPI binds to localhost only. It must be reachable through `cloudflared`
   and nothing else. A service bound to `0.0.0.0` would silently undo the
-  protection, so this is worth checking explicitly during Phase 3
-- The Flutter app must carry an Access credential: a service token, or the
-  Access browser login flow. This is new Phase 4 work that Tailscale would not
-  have required
+  protection, so this is worth checking explicitly during Phase 2
+- The Flutter app must carry an Access credential. Decided: a Cloudflare Access
+  service token (see Follow-Ups). This is new Phase 4 work that Tailscale would
+  not have required
 - New dependency on Cloudflare as a availability single point of failure. If
   Cloudflare or the domain has a problem, remote gate access is down. The NOVA
   remotes still work at short range, so this is an inconvenience rather than a
@@ -66,5 +67,10 @@ bug in the FastAPI auth path cannot by itself expose the gate.
 
 - [ ] Confirm the Access policy rejects unauthenticated requests before Phase 4
       app work begins
-- [ ] Decide between service token and Access login flow for the app
+- [x] Decide between service token and Access login flow for the app.
+      **Decided 2026-07-22: service token.** A single-user app cannot run the
+      interactive Access browser login cleanly, so it presents
+      `CF-Access-Client-Id` + `CF-Access-Client-Secret` headers, validated by
+      Access at the edge. The token is a secret: it stays out of `docs/` and
+      tracked config, and ships in the app via secure storage, not source.
 - [ ] Verify FastAPI binds to localhost only once the server exists

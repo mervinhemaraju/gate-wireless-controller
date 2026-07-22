@@ -34,12 +34,13 @@ Where the declared status and the evidence disagree, trust the evidence and
 - Phase 5 items stay out of the actionable list until Phases 1-4 work, no
   matter how appealing. List them under "out of phase" so they are captured
   but not started
-- Physical wiring is Phase 2 and needs parts in hand plus mains and battery
-  isolated
-- Firmware and server work is Phase 3, but note honestly which parts of it can
-  begin early without hardware: the MQTT contract, the status decoder state
-  machine and its native tests, the FastAPI skeleton and the Access policy
-  design all proceed on a desk
+- Firmware and server work is Phase 2 and proceeds now against the MQTT
+  contract: the MQTT contract itself, the status decoder state machine and its
+  native tests, the FastAPI skeleton and the Access policy design all proceed
+  on a desk. Two items cannot be finalised until Phase 3 hardware exists: the
+  LED flash-code to gate-state mapping and the final GPIO pin assignments
+- Physical wiring, hardware measurement and end-to-end integration are Phase 3
+  and need parts in hand plus mains and battery isolated
 
 ## 3. Lead With Phase Status
 

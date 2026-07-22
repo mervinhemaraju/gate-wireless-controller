@@ -1,6 +1,6 @@
 ---
 name: wiring-check
-description: Read-only pre-flight safety checklist before any Phase 2 wiring session on the D3 motor. Run before touching the CP80 board. Invoke with /wiring-check [what you are about to wire].
+description: Read-only pre-flight safety checklist before any Phase 3 wiring session on the D3 motor. Run before touching the CP80 board. Invoke with /wiring-check [what you are about to wire].
 allowed-tools: Read
 ---
 

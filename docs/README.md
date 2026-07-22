@@ -15,7 +15,7 @@ were made.
 ## wiring/
 
 Pinouts, measured values and diagrams. Every electrical claim carries its
-source. Nothing here yet: Phase 2 has not started.
+source. Nothing here yet: Phase 3 (wiring) has not started.
 
 ## worklog/
 

@@ -30,7 +30,7 @@ Two more are worth creating **when first needed**, rather than pre-emptively:
 
 - `in_transit` - ordered but not arrived. Worth splitting out of `to_buy` once
   an order is placed, because "not ordered yet" and "arriving Thursday" block
-  Phase 2 very differently
+  Phase 3 wiring very differently
 - `rejected` - parts evaluated and ruled out, each with its reason. Several
   rejections already exist as inline asides (30AWG wire as too thin, CH340C in
   favour of CP2102, solder-splice heat shrink as incompatible with the

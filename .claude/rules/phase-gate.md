@@ -21,23 +21,23 @@ the evidence and say the status line needs updating.
 
 ## The Desk-Work Exception
 
-Phase 3 work that depends on no hardware may proceed while Phase 2 is still
-open, because it is designing against a contract rather than building on an
-unverified base. That includes:
+Phase 2 is software and proceeds against the MQTT contract rather than on
+verified hardware. That is the plan, not skipping ahead. It includes:
 
 - The MQTT contract and payload schemas
 - The status decoder state machine and its `native` unit tests
 - The FastAPI skeleton, and the Cloudflare Tunnel and Access policy design
 - Documentation and decision records
 
-What may **not** proceed early is anything whose correctness depends on
-unverified hardware behaviour: mapping specific LED flash patterns to gate
+What may **not** be finalised in Phase 2 is anything whose correctness depends
+on unverified hardware behaviour: mapping specific LED flash patterns to gate
 states before those patterns have been observed on the real gate, fixing pin
 assignments before the relay polarity is measured, or anything that would have
-to be redone once the hardware is characterised.
+to be redone once the hardware is characterised. These belong to Phase 3, where
+the gate is wired and measured; leave them as explicit TODOs in Phase 2.
 
-When taking the exception, say so explicitly rather than quietly starting
-Phase 3.
+When a Phase 2 item is deferred to Phase 3 for this reason, say so explicitly
+rather than quietly guessing the hardware behaviour.
 
 ## Why This Matters
 

@@ -79,7 +79,7 @@ Workflow:
 - `/log-progress [notes]` - end of session: worklog, status, inventory
 - `/inventory-update [parts]` - move arrived parts into `already_have`
 - `/d3-manual <topic>` - look something up in the scanned D3/D5 manual
-- `/wiring-check [work]` - pre-flight safety checklist before Phase 2 wiring
+- `/wiring-check [work]` - pre-flight safety checklist before Phase 3 wiring
 
 Build standards, loaded on demand to keep them out of every turn's context.
 **These are mandatory, not optional reading:**
@@ -107,16 +107,23 @@ enhancements come last.
      network hosted on the Pi's radio; Pi gets internet over Ethernet.
   3. ESP-NOW bridge: second ESP32 on the Pi's USB as a serial bridge
      (longest range, most custom code, last resort).
-- **Phase 2 - Connect the parts to the motor.** Wire the ESP32 to the CP80
-  board: trigger relay/optocoupler on TRG-COM, status LED sense line, buck
-  converter on the 12V aux output. Bench-test before touching the gate.
-- **Phase 3 - Code and configuration.** ESP32 firmware (MQTT: publish state,
-  subscribe to commands), Mosquitto + FastAPI service on the Pi, cloudflared
-  tunnel and Zero Trust Access policy. End-to-end test: API call opens the
-  gate and state is reported back.
+- **Phase 2 - Software (built against the contract).** ESP32 firmware (MQTT:
+  publish state, subscribe to commands), the status decoder state machine,
+  Mosquitto + FastAPI service on the Pi, cloudflared tunnel and Zero Trust
+  Access policy. Everything here is designed against the MQTT contract and
+  bench-tested without the gate. Two items stay as explicit TODOs because they
+  can only be pinned down against real hardware in Phase 3: the LED flash-code
+  to gate-state mapping, and the final GPIO pin assignments (relay polarity has
+  to be measured first).
+- **Phase 3 - Wiring, hardware characterisation and integration.** Wire the
+  ESP32 to the CP80 board: trigger relay/optocoupler on TRG-COM, status LED
+  sense line, buck converter on the 12V aux output. Measure the 12V aux rail,
+  the status LED voltage and polarity, and the relay polarity; fill in the
+  decoder mapping and pin assignments left open in Phase 2. Bench-test, then
+  end-to-end test: API call opens the gate and state is reported back.
 - **Phase 4 - Flutter app.** A simple app: one trigger button plus live gate
   state, talking to the Pi's API through the Cloudflare Tunnel. The app has to
-  carry an Access credential (service token or the Access login flow).
+  carry a Cloudflare Access service token (decided in ADR 0001).
 - **Phase 5 - Improvements (later, not now).** Examples: notification when
   the gate stays open too long, open/close history, pedestrian-mode button,
   reed switch for hard closed-position confirmation. Do not start any of
@@ -124,7 +131,14 @@ enhancements come last.
 
 ## Current Status
 
-- Phase 1 in progress: inventory drawn up, parts not yet ordered.
+- Phase 1 procurement complete bar delivery: all parts in hand except the
+  6-colour hookup wire, ordered 2026-07-22 and in transit (inventory.yaml
+  `in_transit`). The wire is not needed for Phase 2 (software); it is required
+  before Phase 3 (wiring).
+- Phases reordered: software is now Phase 2, physical wiring plus integration
+  is Phase 3. This lets the firmware, MQTT contract, FastAPI service and
+  Cloudflare/ZTA setup proceed now while the wire is in transit. The end-to-end
+  "API call opens the gate" test stays in Phase 3 because it needs the wiring.
 - WiFi at the gate verified: good signal at the motor (phone test, open air).
   Caveat: the ESP32 will sit inside the motor housing, which may attenuate
   the signal; confirm actual RSSI from inside the closed housing on install
@@ -136,8 +150,8 @@ enhancements come last.
 - `.claude/rules/` - project-specific rules, imported above
 - `.claude/skills/` - project-specific slash commands
 - `inventory.yaml` - full parts list: what I own, what to buy
-- `firmware/` - ESP32 firmware (Phase 3)
-- `server/` - Python FastAPI service + MQTT config for the Pi (Phase 3)
+- `firmware/` - ESP32 firmware (Phase 2)
+- `server/` - Python FastAPI service + MQTT config for the Pi (Phase 2)
 - `app/` - Flutter app (Phase 4)
 - `docs/` - all written work: decisions, wiring, worklog, reference,
   runbooks. Conventions in `.claude/rules/docs-conventions.md`
