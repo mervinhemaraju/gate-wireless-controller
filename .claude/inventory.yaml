@@ -28,10 +28,17 @@ already_have:
     quantity: 2
     notes: Powers the ESP32 from the CP80 12V aux output; one spare
 
-  - item: Relay module, 3.3V logic, 2-channel opto-isolated
+  - item: Relay module, single-channel, opto-isolated, HW-803
     quantity: 1
-    notes: Pulses TRG to COM on the CP80 (gate trigger); second channel
-      kept free for a future pedestrian-mode input (Phase 5)
+    notes: Pulses TRG to COM on the CP80 (gate trigger). Corrected 2026-07-28:
+      silkscreen confirms single-channel ("1 Relay Module high/low level
+      trigger"), not the 2-channel part earlier notes assumed - no spare
+      channel on this board for the Phase 5 pedestrian-mode input, which
+      will need its own relay. Relay coil is JQC3F-05VDC-C, 5V DC rated
+      (not 3.3V); logic IN pin is opto-isolated and separate from the coil
+      supply. Board has an H/L jumper selecting high- or low-level trigger
+      on IN - bench test needed to confirm which position works before
+      wiring (Stage A.2).
 
   - item: Cable ties
     quantity: 1

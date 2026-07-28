@@ -19,12 +19,14 @@ Pinouts, measured values and diagrams. Every electrical claim carries its
 source.
 
 - [01 - Optocoupler Front End](wiring/01-optocoupler-front-end.md) - PC817 module bench test (superseded, module rejected, see ADR 0002)
+- [02 - Relay Module](wiring/02-relay-module.md) - HW-803 relay bench test: confirmed active-HIGH trigger polarity, single-channel correction
 
 ## worklog/
 
 Session by session record of what was done, learned and broken.
 
 - [2026-07-28 - Optocoupler Bench Test](worklog/2026-07-28-optocoupler-bench-test.md) - Phase 1 procurement closed; PC817 module bench-tested and rejected
+- [2026-07-28 (b) - Relay Bench Test](worklog/2026-07-28-relay-bench-test-b.md) - relay module bench-tested: active-HIGH trigger confirmed, single-channel correction
 
 ## reference/
 
