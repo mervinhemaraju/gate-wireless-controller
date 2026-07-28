@@ -131,10 +131,9 @@ enhancements come last.
 
 ## Current Status
 
-- Phase 1 procurement complete bar delivery: all parts in hand except the
-  6-colour hookup wire, ordered 2026-07-22 and in transit (inventory.yaml
-  `in_transit`). The wire is not needed for Phase 2 (software); it is required
-  before Phase 3 (wiring).
+- Phase 1 procurement complete: the 6-colour hookup wire arrived 2026-07-28,
+  the last outstanding part. `to_buy` and `in_transit` are both empty. Nothing
+  in Phase 3 wiring is blocked on parts any more.
 - Phases reordered: software is now Phase 2, physical wiring plus integration
   is Phase 3. This lets the firmware, MQTT contract, FastAPI service and
   Cloudflare/ZTA setup proceed now while the wire is in transit. The end-to-end

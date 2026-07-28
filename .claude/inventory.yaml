@@ -90,20 +90,16 @@ already_have:
     notes: 127-800pcs assorted kit; insulation and strain relief inside
       the motor housing
 
-in_transit:
-  # Ordered, not yet arrived. Not needed for Phase 2 (software); required
-  # before Phase 3 (wiring).
   - item: Hookup wire (stranded), 6 colors
     quantity: 1
-    example: UL1007 stranded wire, 6-color bundle, 22AWG (not the 30AWG
-      default some listings pre-select; 30AWG is too thin for this build)
-    purpose: All module-to-module and CP80 wiring. Red=12V, Black=GND,
-      Yellow=5V, Blue=trigger signal, Green=relay-to-CP80 loop,
-      White=status LED chain
-    approx_price_usd: 8
-    ordered: 2026-07-22
+    notes: UL1007 stranded, 22AWG, 6-color bundle. All module-to-module and
+      CP80 wiring. Colour plan - Red=12V, Black=GND, Yellow=5V,
+      Blue=trigger signal, Green=relay-to-CP80 loop, White=status LED chain.
+      Arrived 2026-07-28
 
-to_buy: []  # empty: everything is either in hand or in transit
+in_transit: []  # empty: nothing on order
+
+to_buy: []  # empty: every part needed for Phases 1-3 is in hand
 
 optional:
   - item: Reed switch + magnet (gate rated)
