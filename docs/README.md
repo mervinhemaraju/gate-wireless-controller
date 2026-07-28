@@ -30,6 +30,7 @@ Session by session record of what was done, learned and broken.
 
 - [2026-07-28 - Optocoupler Bench Test](worklog/2026-07-28-optocoupler-bench-test.md) - Phase 1 procurement closed; PC817 module bench-tested and rejected
 - [2026-07-28 (b) - Relay Bench Test](worklog/2026-07-28-relay-bench-test-b.md) - relay module bench-tested: active-HIGH trigger confirmed, single-channel correction
+- [2026-07-29 - Firmware Skeleton](worklog/2026-07-29-firmware-skeleton.md) - mounting/pin-map close-out, first firmware code, MQTT contract amendment, verified with pio test/run
 
 ## reference/
 

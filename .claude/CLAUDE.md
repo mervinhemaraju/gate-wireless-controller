@@ -136,10 +136,18 @@ enhancements come last.
   rejected for the gate-status sense line (see ADR 0002). Everything else
   from Phase 1 is in hand; only the resistor assortment stands between
   `to_buy` and empty again. Local shop, days lead time, not blocking.
-- Phases reordered: software is now Phase 2, physical wiring plus integration
-  is Phase 3. This lets the firmware, MQTT contract, FastAPI service and
-  Cloudflare/ZTA setup proceed now while the wire is in transit. The end-to-end
-  "API call opens the gate" test stays in Phase 3 because it needs the wiring.
+- Phase 2, Stage A (bench characterisation) is fully closed: relay polarity
+  measured active-HIGH, mounting-box dry-layout confirmed fit (box will be
+  mounted open, see ADR 0003), GPIO pins assigned
+  (`docs/wiring/04-gpio-pin-map.md`).
+- Phase 2, Stage B (software) has started: `firmware/` now exists (ESP32
+  skeleton against the MQTT contract, ADR 0002's resistor-divider decision,
+  and the measured relay polarity). `pio test -e native` and
+  `pio run -e esp32dev` both verified passing 2026-07-29. Two Phase 3
+  placeholders remain explicitly marked in `firmware/include/config.h`:
+  the status-sense line's polarity and the LED flash-period thresholds.
+  Not yet started: the FastAPI service, Mosquitto config, and Cloudflare
+  Tunnel/Access setup.
 - WiFi at the gate verified: good signal at the motor (phone test, open air).
   Caveat: the ESP32 will sit inside the motor housing, which may attenuate
   the signal; confirm actual RSSI from inside the closed housing on install

@@ -42,3 +42,11 @@ terraform.rc
 # Optional: ignore plan files saved before destroying Terraform configuration
 # Uncomment the line below if you want to ignore planout files.
 # planout
+
+# PlatformIO build output
+.pio/
+
+# Firmware secrets (WiFi PSK, MQTT credentials, OTA password) - never commit.
+# Copy firmware/include/secrets.h.example to firmware/include/secrets.h and
+# fill in real values there.
+firmware/include/secrets.h

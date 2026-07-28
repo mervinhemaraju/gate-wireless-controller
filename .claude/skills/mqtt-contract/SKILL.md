@@ -68,6 +68,24 @@ to new firmware fails loudly instead of guessing.
   because it is set as an LWT and simpler is more robust there
 - Reject unknown `v` values rather than best-effort parsing them
 
+### `gate/cmd/ack` Result Values
+
+A closed set, not free-form text. Every consumer (server, app) must handle
+exactly these and no others:
+
+| `result` | Meaning |
+|---|---|
+| `accepted` | Trigger pulse fired |
+| `duplicate` | `request_id` already seen; no pulse fired, not an error |
+| `rejected_cooldown` | Received during the post-pulse cooldown window |
+| `rejected_busy` | Received while a pulse is currently in progress |
+| `rejected_malformed` | `request_id` missing or failed basic validation |
+
+Only `accepted` represents an actual gate movement. The four rejection/dedup
+values all mean "no pulse happened" and should read as informational, not as
+errors, in the API and app - a malfunctioning app retrying into a closed gate
+is expected traffic, not a fault condition.
+
 ## Gate State Enum
 
 Defined once here and mirrored in all three codebases:
