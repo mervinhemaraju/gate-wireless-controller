@@ -12,6 +12,7 @@ were made.
 
 - [0001 - Cloudflare Tunnel over Tailscale](decisions/0001-cloudflare-tunnel-over-tailscale.md) - remote access method for the Pi's API
 - [0002 - Resistor Divider over Optocoupler](decisions/0002-resistor-divider-over-optocoupler.md) - why the PC817 module was dropped for the gate-status sense line
+- [0003 - Open Mounting Box](decisions/0003-open-mounting-box.md) - why the IP67 box is mounted open, D3 housing as the only environmental barrier
 
 ## wiring/
 
@@ -20,6 +21,8 @@ source.
 
 - [01 - Optocoupler Front End](wiring/01-optocoupler-front-end.md) - PC817 module bench test (superseded, module rejected, see ADR 0002)
 - [02 - Relay Module](wiring/02-relay-module.md) - HW-803 relay bench test: confirmed active-HIGH trigger polarity, single-channel correction
+- [03 - Mounting Layout](wiring/03-mounting-layout.md) - dry-layout check: ESP32, relay and buck converter fit confirmed; box will be mounted open
+- [04 - GPIO Pin Map](wiring/04-gpio-pin-map.md) - relay trigger and status sense pin assignments, with reasoning
 
 ## worklog/
 
