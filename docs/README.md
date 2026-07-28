@@ -11,16 +11,20 @@ Architecture and component decisions, one per file, numbered in the order they
 were made.
 
 - [0001 - Cloudflare Tunnel over Tailscale](decisions/0001-cloudflare-tunnel-over-tailscale.md) - remote access method for the Pi's API
+- [0002 - Resistor Divider over Optocoupler](decisions/0002-resistor-divider-over-optocoupler.md) - why the PC817 module was dropped for the gate-status sense line
 
 ## wiring/
 
 Pinouts, measured values and diagrams. Every electrical claim carries its
-source. Nothing here yet: Phase 3 (wiring) has not started.
+source.
+
+- [01 - Optocoupler Front End](wiring/01-optocoupler-front-end.md) - PC817 module bench test (superseded, module rejected, see ADR 0002)
 
 ## worklog/
 
-Session by session record of what was done, learned and broken. Nothing here
-yet.
+Session by session record of what was done, learned and broken.
+
+- [2026-07-28 - Optocoupler Bench Test](worklog/2026-07-28-optocoupler-bench-test.md) - Phase 1 procurement closed; PC817 module bench-tested and rejected
 
 ## reference/
 

@@ -131,9 +131,11 @@ enhancements come last.
 
 ## Current Status
 
-- Phase 1 procurement complete: the 6-colour hookup wire arrived 2026-07-28,
-  the last outstanding part. `to_buy` and `in_transit` are both empty. Nothing
-  in Phase 3 wiring is blocked on parts any more.
+- Phase 1 procurement reopened for one item: a basic resistor assortment,
+  needed after the PC817 optocoupler module was bench-tested 2026-07-28 and
+  rejected for the gate-status sense line (see ADR 0002). Everything else
+  from Phase 1 is in hand; only the resistor assortment stands between
+  `to_buy` and empty again. Local shop, days lead time, not blocking.
 - Phases reordered: software is now Phase 2, physical wiring plus integration
   is Phase 3. This lets the firmware, MQTT contract, FastAPI service and
   Cloudflare/ZTA setup proceed now while the wire is in transit. The end-to-end

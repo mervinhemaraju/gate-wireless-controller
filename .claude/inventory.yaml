@@ -52,15 +52,6 @@ already_have:
     notes: Pin-matched to the 30-pin ESP32; every GPIO becomes a screw
       terminal, no soldering and good vibration resistance
 
-  - item: Optocoupler module
-    quantity: 1
-    notes: PC817 breakout, 2-channel; senses the CP80 gate-status output into
-      a 3.3V ESP32 GPIO, one channel spare. Status source is the CP80 `LED`
-      terminal, approx 4.5V DC / 20mA per manual p.31 (NOT the 12V rail as
-      earlier assumed). That 20mA-max source is marginal for a PC817 input;
-      confirm by measurement and size the series resistor for it before wiring.
-      See docs/reference/d3-manual-p31-p41-cp80-terminals.md
-
   - item: Ferrule crimp terminals, E0508 (0.5mm²)
     quantity: 1
     notes: Matches the 22AWG hookup wire and the DL-6 crimper already on
@@ -99,7 +90,29 @@ already_have:
 
 in_transit: []  # empty: nothing on order
 
-to_buy: []  # empty: every part needed for Phases 1-3 is in hand
+to_buy:
+  - item: Resistor assortment, 1/4W through-hole, E12 series (~100R to 10k)
+    quantity: 1
+    notes: For the resistor divider that replaces the optocoupler on the
+      gate-status sense line (see docs/decisions/0002-resistor-divider-over-optocoupler.md).
+      Values cannot be picked until the CP80 LED terminal is measured under
+      load in Phase 3, so buy an assortment rather than specific values.
+      Available from the local shop, days lead time.
+
+rejected:
+  - item: Optocoupler module (PC817 breakout, 2-channel)
+    reason: Bench-tested 2026-07-28 for the gate-status sense line. Onboard
+      series resistor is 3k ohm on both input and output side (SMD marking
+      `302`, both channels). Driven at both 3.3V and 5V from an ESP32, the
+      sensed output never swung - flat 3.27V regardless of input state.
+      Fails to switch reliably from a source in the CP80 LED terminal's
+      class (~4.5V DC, 20mA max). Replaced by a plain resistor divider,
+      which has no switching-current threshold to fail against and costs no
+      isolation benefit, since the ESP32 and CP80 already share ground
+      through the buck converter in this design. Full test in
+      docs/wiring/01-optocoupler-front-end.md, decision in
+      docs/decisions/0002-resistor-divider-over-optocoupler.md. Kept on the
+      shelf; not rebought or reconsidered for this role.
 
 optional:
   - item: Reed switch + magnet (gate rated)
