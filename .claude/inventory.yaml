@@ -95,6 +95,7 @@ already_have:
       Blue=trigger signal, Green=relay-to-CP80 loop, White=status LED chain.
       Arrived 2026-07-28
 
+in_transit: 
   - item: Resistor assortment, 1/4W through-hole, E12 series (~100R to 10k)
     quantity: 1
     notes: 600pcs metal film kit, 1% tolerance, 30 values (10R-1M) x 20pcs
@@ -103,8 +104,6 @@ already_have:
       docs/decisions/0002-resistor-divider-over-optocoupler.md). Specific
       divider values still to be picked once the CP80 LED terminal is
       measured under load in Phase 3.
-
-in_transit: []  # empty: nothing on order
 
 to_buy: []  # empty: Phase 1 procurement complete
 
