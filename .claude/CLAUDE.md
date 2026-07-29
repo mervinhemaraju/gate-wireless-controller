@@ -131,11 +131,10 @@ enhancements come last.
 
 ## Current Status
 
-- Phase 1 procurement reopened for one item: a basic resistor assortment,
-  needed after the PC817 optocoupler module was bench-tested 2026-07-28 and
-  rejected for the gate-status sense line (see ADR 0002). Everything else
-  from Phase 1 is in hand; only the resistor assortment stands between
-  `to_buy` and empty again. Local shop, days lead time, not blocking.
+- Phase 1 procurement is complete: the resistor assortment (600pcs, 30
+  values, 10R-1M, 1% metal film, boxed) arrived 2026-07-29, closing
+  `to_buy`. Phase 3 wiring is unblocked on parts; the WiFi-inside-housing
+  RSSI check still stands as a separate caveat (see below).
 - Phase 2, Stage A (bench characterisation) is fully closed: relay polarity
   measured active-HIGH, mounting-box dry-layout confirmed fit (box will be
   mounted open, see ADR 0003), GPIO pins assigned
