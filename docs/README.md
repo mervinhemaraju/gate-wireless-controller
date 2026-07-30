@@ -13,6 +13,7 @@ were made.
 - [0001 - Cloudflare Tunnel over Tailscale](decisions/0001-cloudflare-tunnel-over-tailscale.md) - remote access method for the Pi's API
 - [0002 - Resistor Divider over Optocoupler](decisions/0002-resistor-divider-over-optocoupler.md) - why the PC817 module was dropped for the gate-status sense line
 - [0003 - Open Mounting Box](decisions/0003-open-mounting-box.md) - why the IP67 box is mounted open, D3 housing as the only environmental barrier
+- [0004 - Docker Compose over Bare venv + systemd](decisions/0004-docker-compose-over-systemd.md) - why the Pi-side stack is containerized, and why both services run under `network_mode: host`
 
 ## wiring/
 

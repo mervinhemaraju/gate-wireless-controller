@@ -1,0 +1,64 @@
+name: Build Docker Images
+
+# server/docker-compose.yml builds gate-api and gate-mosquitto locally for
+# `docker compose up`; this workflow builds and publishes the same two
+# images to GHCR so the Pi can pull tagged images instead of building on
+# device. See docs/decisions/0004-docker-compose-over-systemd.md.
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        include:
+          - image: gate-api
+            context: server/api
+          - image: gate-mosquitto
+            context: server/mosquitto
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Determine image tag
+        id: tag
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "value=prod" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=dev" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Lowercase image repository (GHCR requires it)
+        id: repo
+        run: echo "owner=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push ${{ matrix.image }}
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.context }}
+          push: true
+          tags: >-
+            ${{ env.REGISTRY }}/${{ steps.repo.outputs.owner }}/${{ matrix.image }}:${{ steps.tag.outputs.value }}

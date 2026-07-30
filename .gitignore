@@ -50,3 +50,19 @@ terraform.rc
 # Copy firmware/include/secrets.h.example to firmware/include/secrets.h and
 # fill in real values there.
 firmware/include/secrets.h
+
+# Server secrets and local state - never commit. Copy server/.env.example to
+# server/.env and fill in real values there.
+server/.env
+server/mosquitto/passwords/
+server/mosquitto/data/
+server/mosquitto/log/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.venv/

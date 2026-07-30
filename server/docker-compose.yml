@@ -1,0 +1,54 @@
+# Both services run on network_mode: host rather than Docker's default bridge
+# network. Two contract requirements depend on binding to a specific host
+# interface (Mosquitto to the LAN IP, FastAPI to 127.0.0.1 only), and bridge
+# networking's NAT would silently break both - see
+# docs/decisions/0004-docker-compose-over-systemd.md. This is a Linux-only
+# feature; the Pi 5's Docker Engine supports it natively.
+
+services:
+  mosquitto:
+    build:
+      context: ./mosquitto
+    image: gate-mosquitto:local
+    container_name: gate-mosquitto
+    network_mode: host
+    env_file: .env
+    environment:
+      MOSQUITTO_LAN_BIND_IP: ${MOSQUITTO_LAN_BIND_IP}
+    volumes:
+      - ./mosquitto/passwords:/mosquitto/passwords:ro
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 128M
+        reservations:
+          cpus: "0.10"
+          memory: 32M
+
+  api:
+    build:
+      context: ./api
+    image: gate-api:local
+    container_name: gate-api
+    network_mode: host
+    env_file: .env
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 256M
+        reservations:
+          cpus: "0.10"
+          memory: 64M
+
+volumes:
+  mosquitto-data:
+  mosquitto-log:

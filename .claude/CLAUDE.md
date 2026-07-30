@@ -131,9 +131,10 @@ enhancements come last.
 
 ## Current Status
 
-- Phase 1 procurement is complete: the resistor assortment (600pcs, 30
-  values, 10R-1M, 1% metal film, boxed) arrived 2026-07-29, closing
-  `to_buy`. Phase 3 wiring is unblocked on parts; the WiFi-inside-housing
+- Phase 1 procurement: `to_buy` is empty (nothing left to order), but the
+  resistor assortment (600pcs, 30 values, 10R-1M, 1% metal film, boxed) has
+  not arrived yet - still `in_transit` as of 2026-07-30. Phase 3 wiring is
+  not fully unblocked on parts until it arrives; the WiFi-inside-housing
   RSSI check still stands as a separate caveat (see below).
 - Phase 2, Stage A (bench characterisation) is fully closed: relay polarity
   measured active-HIGH, mounting-box dry-layout confirmed fit (box will be
@@ -163,6 +164,9 @@ enhancements come last.
 - `app/` - Flutter app (Phase 4)
 - `docs/` - all written work: decisions, wiring, worklog, reference,
   runbooks. Conventions in `.claude/rules/docs-conventions.md`
+- `.github/workflows/` - CI: builds and pushes the `gate-api` and
+  `gate-mosquitto` images to GHCR on push to `dev` (tag `dev`) and `main`
+  (tag `prod`)
 
 ## Reference Material
 

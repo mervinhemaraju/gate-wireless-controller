@@ -1,0 +1,16 @@
+# Rendered to mosquitto.conf by entrypoint.sh - do not edit the rendered file
+# directly, it is regenerated on every container start.
+#
+# Bound to the LAN interface only, per .claude/skills/mqtt-contract/SKILL.md:
+# the broker is never routed through the Cloudflare Tunnel, and a broker
+# reachable from the internet is a gate opener with no auth policy in front
+# of it.
+listener 1883 ${MOSQUITTO_LAN_BIND_IP}
+
+allow_anonymous false
+password_file /mosquitto/passwords/passwordfile
+
+persistence true
+persistence_location /mosquitto/data/
+
+log_dest stdout
