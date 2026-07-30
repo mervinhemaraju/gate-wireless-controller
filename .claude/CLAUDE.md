@@ -140,14 +140,28 @@ enhancements come last.
   measured active-HIGH, mounting-box dry-layout confirmed fit (box will be
   mounted open, see ADR 0003), GPIO pins assigned
   (`docs/wiring/04-gpio-pin-map.md`).
-- Phase 2, Stage B (software) has started: `firmware/` now exists (ESP32
-  skeleton against the MQTT contract, ADR 0002's resistor-divider decision,
-  and the measured relay polarity). `pio test -e native` and
-  `pio run -e esp32dev` both verified passing 2026-07-29. Two Phase 3
-  placeholders remain explicitly marked in `firmware/include/config.h`:
-  the status-sense line's polarity and the LED flash-period thresholds.
-  Not yet started: the FastAPI service, Mosquitto config, and Cloudflare
-  Tunnel/Access setup.
+- Phase 2, Stage B (software) is well underway but not closed:
+  - `firmware/` (2026-07-29): ESP32 skeleton against the MQTT contract, ADR
+    0002's resistor-divider decision, and the measured relay polarity.
+    `pio test -e native` and `pio run -e esp32dev` both verified passing.
+    Two Phase 3 placeholders remain explicitly marked in
+    `firmware/include/config.h`: the status-sense line's polarity and the
+    LED flash-period thresholds. Firmware has not yet been bench-tested
+    end-to-end with an LED standing in for the relay
+    (`firmware/README.md`).
+  - `server/` (2026-07-30): FastAPI + Mosquitto skeleton, Docker Compose
+    (`network_mode: host`, ADR 0004), 17 tests passing, clean on
+    `mypy --strict`/`ruff`/`black`/`isort`. `.github/workflows/docker-build.yml`
+    builds and pushes both images to GHCR on push to `dev`/`main` -
+    verified working, both images pushed successfully. Not yet done: running
+    the compose stack on the actual Pi 5.
+  - Cloudflare Tunnel + Zero Trust Access (2026-07-30, separate `cloudflare`
+    repo, `components/200-zta` and `components/100-dns`): applied
+    successfully to real infrastructure. `gate.mervinhemaraju.com` routes
+    through a dedicated tunnel to a service-token-only Access Application;
+    tunnel and service token credentials are in Doppler
+    (`ZTA_TUNNEL_TOKEN_GATE`, `ZTA_SERVICE_TOKEN_GATE`). Not yet done:
+    installing `cloudflared` on the Pi itself.
 - WiFi at the gate verified: good signal at the motor (phone test, open air).
   Caveat: the ESP32 will sit inside the motor housing, which may attenuate
   the signal; confirm actual RSSI from inside the closed housing on install
