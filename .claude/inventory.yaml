@@ -30,7 +30,7 @@ already_have:
 
   - item: Relay module, single-channel, opto-isolated, HW-803
     quantity: 1
-    notes: Pulses TRG to COM on the CP80 (gate trigger). Corrected 2026-07-28:
+    notes: Pulses TRG to COM on the CP80 (gate trigger). Corrected 2026-07-28 =
       silkscreen confirms single-channel ("1 Relay Module high/low level
       trigger"), not the 2-channel part earlier notes assumed - no spare
       channel on this board for the Phase 5 pedestrian-mode input, which
@@ -95,7 +95,15 @@ already_have:
       Blue=trigger signal, Green=relay-to-CP80 loop, White=status LED chain.
       Arrived 2026-07-28
 
-in_transit: 
+  - item: Resistor, 47R 5% (measured)
+    quantity: 5
+    notes: Found already on hand, separate from the in-transit 30-value
+      assortment. Measured 48R on the 2k range [measured 2026-08-04],
+      consistent with the yellow-violet-black-gold color code. Suitable
+      for LED current-limiting in the Phase 2 firmware bench test
+      (LED standing in for the relay on RELAY_TRIGGER_PIN).
+
+in_transit:
   - item: Resistor assortment, 1/4W through-hole, E12 series (~100R to 10k)
     quantity: 1
     notes: 600pcs metal film kit, 1% tolerance, 30 values (10R-1M) x 20pcs

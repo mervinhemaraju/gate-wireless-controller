@@ -33,6 +33,7 @@ Session by session record of what was done, learned and broken.
 - [2026-07-28 (b) - Relay Bench Test](worklog/2026-07-28-relay-bench-test-b.md) - relay module bench-tested: active-HIGH trigger confirmed, single-channel correction
 - [2026-07-29 - Firmware Skeleton](worklog/2026-07-29-firmware-skeleton.md) - mounting/pin-map close-out, first firmware code, MQTT contract amendment, verified with pio test/run
 - [2026-07-30 - Server Skeleton and Cloudflare Tunnel](worklog/2026-07-30-server-skeleton-and-cloudflare-tunnel.md) - FastAPI + Mosquitto Docker Compose skeleton, GHCR CI, and the Cloudflare Tunnel + Zero Trust Access setup (separate `cloudflare` repo) applied to real infrastructure
+- [2026-08-04 - Firmware Bench Test](worklog/2026-08-04-firmware-bench-test.md) - full ESP32 firmware bench-tested end-to-end with an LED standing in for the relay, against a throwaway local Mosquitto broker; closes the pre-CP80-wiring bench-test TODO
 
 ## reference/
 

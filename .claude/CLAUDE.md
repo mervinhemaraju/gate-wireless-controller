@@ -141,14 +141,17 @@ enhancements come last.
   mounted open, see ADR 0003), GPIO pins assigned
   (`docs/wiring/04-gpio-pin-map.md`).
 - Phase 2, Stage B (software) is well underway but not closed:
-  - `firmware/` (2026-07-29): ESP32 skeleton against the MQTT contract, ADR
-    0002's resistor-divider decision, and the measured relay polarity.
-    `pio test -e native` and `pio run -e esp32dev` both verified passing.
-    Two Phase 3 placeholders remain explicitly marked in
-    `firmware/include/config.h`: the status-sense line's polarity and the
-    LED flash-period thresholds. Firmware has not yet been bench-tested
-    end-to-end with an LED standing in for the relay
-    (`firmware/README.md`).
+  - `firmware/` (2026-07-29, bench-tested 2026-08-04): ESP32 skeleton
+    against the MQTT contract, ADR 0002's resistor-divider decision, and
+    the measured relay polarity. `pio test -e native` and `pio run -e
+    esp32dev` both verified passing. Bench-tested end-to-end on real
+    hardware with an LED standing in for the relay and a throwaway local
+    Mosquitto broker: trigger/ack/duplicate/cooldown/heartbeat/LWT all
+    confirmed working against the MQTT contract
+    (`docs/worklog/2026-08-04-firmware-bench-test.md`). Two Phase 3
+    placeholders remain explicitly marked in `firmware/include/config.h`:
+    the status-sense line's polarity and the LED flash-period thresholds -
+    both still need the real CP80, not just a bench LED.
   - `server/` (2026-07-30): FastAPI + Mosquitto skeleton, Docker Compose
     (`network_mode: host`, ADR 0004), 17 tests passing, clean on
     `mypy --strict`/`ruff`/`black`/`isort`. `.github/workflows/docker-build.yml`
