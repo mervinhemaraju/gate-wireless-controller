@@ -136,35 +136,41 @@ enhancements come last.
   not arrived yet - still `in_transit` as of 2026-07-30. Phase 3 wiring is
   not fully unblocked on parts until it arrives; the WiFi-inside-housing
   RSSI check still stands as a separate caveat (see below).
-- Phase 2, Stage A (bench characterisation) is fully closed: relay polarity
-  measured active-HIGH, mounting-box dry-layout confirmed fit (box will be
-  mounted open, see ADR 0003), GPIO pins assigned
-  (`docs/wiring/04-gpio-pin-map.md`).
-- Phase 2, Stage B (software) is well underway but not closed:
-  - `firmware/` (2026-07-29, bench-tested 2026-08-04): ESP32 skeleton
-    against the MQTT contract, ADR 0002's resistor-divider decision, and
-    the measured relay polarity. `pio test -e native` and `pio run -e
-    esp32dev` both verified passing. Bench-tested end-to-end on real
-    hardware with an LED standing in for the relay and a throwaway local
-    Mosquitto broker: trigger/ack/duplicate/cooldown/heartbeat/LWT all
-    confirmed working against the MQTT contract
-    (`docs/worklog/2026-08-04-firmware-bench-test.md`). Two Phase 3
-    placeholders remain explicitly marked in `firmware/include/config.h`:
-    the status-sense line's polarity and the LED flash-period thresholds -
-    both still need the real CP80, not just a bench LED.
-  - `server/` (2026-07-30): FastAPI + Mosquitto skeleton, Docker Compose
-    (`network_mode: host`, ADR 0004), 17 tests passing, clean on
-    `mypy --strict`/`ruff`/`black`/`isort`. `.github/workflows/docker-build.yml`
-    builds and pushes both images to GHCR on push to `dev`/`main` -
-    verified working, both images pushed successfully. Not yet done: running
-    the compose stack on the actual Pi 5.
-  - Cloudflare Tunnel + Zero Trust Access (2026-07-30, separate `cloudflare`
-    repo, `components/200-zta` and `components/100-dns`): applied
-    successfully to real infrastructure. `gate.mervinhemaraju.com` routes
-    through a dedicated tunnel to a service-token-only Access Application;
-    tunnel and service token credentials are in Doppler
-    (`ZTA_TUNNEL_TOKEN_GATE`, `ZTA_SERVICE_TOKEN_GATE`). Not yet done:
-    installing `cloudflared` on the Pi itself.
+- **Phase 2 is complete** (both stages closed 2026-08-05):
+  - Stage A (bench characterisation): relay polarity measured active-HIGH,
+    mounting-box dry-layout confirmed fit (box will be mounted open, see
+    ADR 0003), GPIO pins assigned (`docs/wiring/04-gpio-pin-map.md`).
+  - Stage B (software):
+    - `firmware/`: ESP32 skeleton against the MQTT contract, ADR 0002's
+      resistor-divider decision, and the measured relay polarity.
+      Bench-tested end-to-end on real hardware with an LED standing in for
+      the relay and a throwaway local Mosquitto broker:
+      trigger/ack/duplicate/cooldown/heartbeat/LWT all confirmed working
+      against the MQTT contract
+      (`docs/worklog/2026-08-04-firmware-bench-test.md`).
+    - `server/`: FastAPI + Mosquitto Docker Compose stack (`network_mode:
+      host`, ADR 0004) running for real on the Pi 5, both containers
+      healthy, `gate-api` confirmed talking to the broker.
+    - Cloudflare Tunnel + Zero Trust Access: `cloudflared` installed and
+      connected on the Pi; the phone-to-gate path verified end to end
+      through the real tunnel (unauthenticated request blocked,
+      authenticated request reaches FastAPI) -
+      `docs/worklog/2026-08-05-pi-deployment-and-tunnel.md`. Redo-from-
+      scratch steps captured in Notion ("Raspberry Pi Setup" -> "Gate
+      Wireless Controller - Server & Tunnel Setup").
+  - Two placeholders remain, by design, waiting on Phase 3 hardware rather
+    than left over from Phase 2: `firmware/include/config.h`'s
+    status-sense polarity and LED flash-period thresholds, both marked
+    `[UNVERIFIED, Phase 3]`.
+  - One real bug found during Pi deployment, fixed same day:
+    `server/.env.example`'s `MQTT_BROKER_HOST` default was `mosquitto`,
+    wrong under `network_mode: host` (no Docker service-name DNS, per ADR
+    0004) - now defaults to the same placeholder IP as
+    `MOSQUITTO_LAN_BIND_IP`, with a comment explaining why.
+- **Phase 3 is next and fully unblocked from the software side.** Remaining
+  blockers are physical, not software: the in-transit resistor assortment
+  for the real status-sense divider, and the WiFi-inside-closed-housing
+  RSSI check that can only happen at the gate on install day.
 - WiFi at the gate verified: good signal at the motor (phone test, open air).
   Caveat: the ESP32 will sit inside the motor housing, which may attenuate
   the signal; confirm actual RSSI from inside the closed housing on install
