@@ -103,7 +103,6 @@ already_have:
       for LED current-limiting in the Phase 2 firmware bench test
       (LED standing in for the relay on RELAY_TRIGGER_PIN).
 
-in_transit:
   - item: Resistor assortment, 1/4W through-hole, E12 series (~100R to 10k)
     quantity: 1
     notes: 600pcs metal film kit, 1% tolerance, 30 values (10R-1M) x 20pcs
@@ -111,7 +110,7 @@ in_transit:
       optocoupler on the gate-status sense line (see
       docs/decisions/0002-resistor-divider-over-optocoupler.md). Specific
       divider values still to be picked once the CP80 LED terminal is
-      measured under load in Phase 3.
+      measured under load in Phase 3. Arrived 2026-08-16.
 
 to_buy: []  # empty: Phase 1 procurement complete
 
